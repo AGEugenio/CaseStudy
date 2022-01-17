@@ -1,0 +1,33 @@
+---
+- name: OSPF CONFIGURATION ON ROUTER1
+  hosts: Router1
+  gather_facts: false
+  connection: local
+ 
+  tasks:
+   - name: ENABLE OSPF ON ROUTER1
+     ios_command:
+       commands:
+         - config terminal
+         - router ospf 1
+         - network 172.16.0.1 0.0.0.255 area 0
+         - network 10.0.0.1 0.0.0.3 area 0
+         - network 10.0.0.2 0.0.0.3 area 0
+     register: ospf
+ 
+- name: OSPF CONFIGURATION ON ROUTER2
+  hosts: Router2
+  gather_facts: false
+  connection: local
+ 
+  tasks:
+   - name: ENABLE OSPF ON ROUTER2
+     ios_command:
+       commands:
+         - config terminal
+         - router ospf 1
+         - network 172.16.0.1 0.0.0.255 area 0
+         - network 10.0.0.1 0.0.0.3 area 0
+         - network 10.0.0.2 0.0.0.3 area 0
+         
+     register: ospf

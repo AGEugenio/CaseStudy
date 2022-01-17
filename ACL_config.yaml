@@ -1,0 +1,27 @@
+---
+- name: ACL CONFIGURATION ON ROUTER1
+  hosts: Router1
+  gather_facts: false
+  connection: local
+ 
+  tasks:
+   - name: CREATE ACL ON ROUTER1
+     ios_command:
+       commands:
+         - config terminal
+         - access-list 181 permit tcp 172.16.0.0 0.0.0.255 172.16.0.3 0.0.0.0
+         - access-list 181 permit udp 172.16.0.0 0.0.0.255 172.16.0.3 0.0.0.255  
+     register: acl
+ 
+- name: ACL CONFIGURATION ON ROUTER2
+  hosts: Router2
+  gather_facts: false
+  connection: local
+ 
+  tasks:
+   - name: CREATE ACL ON ROUTER2
+     ios_command:
+       commands:
+         - config terminal
+         - access-list 110 permit ip any any
+     register: acl
